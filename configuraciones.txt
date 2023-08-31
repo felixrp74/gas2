@@ -1,0 +1,4 @@
+generar automaticamente modelos desde una base de datos existente
+https://youtu.be/cbn1VlmOOvA?t=168
+CLI: php artisan code:models
+
