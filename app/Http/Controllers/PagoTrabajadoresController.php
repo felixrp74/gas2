@@ -10,6 +10,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class PagoTrabajadoresController extends Controller
 {
@@ -69,7 +70,7 @@ class PagoTrabajadoresController extends Controller
 
         try{
 
-            $puesto = Puesto::where('idpuesto', $datos_trabajador["puesto_idpuesto"]);
+            $puesto = Puesto::where('idpuesto', $datos_trabajador["puesto_idpuesto"])->get()->first();
             
             $empleado = Empleado::create([ 
                 'DNI' =>  $datos_trabajador["dni"],
@@ -79,39 +80,32 @@ class PagoTrabajadoresController extends Controller
                 'direccion' =>  $datos_trabajador["direccion"],
                 'celular' =>  $datos_trabajador["celular"],
                 'email' =>  $datos_trabajador["email"],
-                'dias_asistidos' =>  $datos_trabajador["dias_asistidos"],
+                // 'dias_asistidos' =>  $datos_trabajador["dias_asistidos"],
                 'puesto_idpuesto' =>  $datos_trabajador["puesto_idpuesto"],
                 'sede_idsede' =>  $datos_trabajador["sede_idsede"]
             ]);
 
             //CREAR USUARIO 
 
-            User::create([
-                'dni' => $datos_trabajador["dni"],
-                'name' => $datos_trabajador["nombre"],
-                'apellido_paterno' => $datos_trabajador["apellido_paterno"],
-                'apellido_materno' => $datos_trabajador["apellido_materno"],
-                'celular' => $datos_trabajador["celular"],
-                'email' => $datos_trabajador["email"],
-                'password' => $datos_trabajador["password"],
-                // 'two_factor_secret' => $datos_trabajador["oo"],
-                // 'two_factor_recovery_codes' => $datos_trabajador["oo"],
-                'usuario' => $datos_trabajador["nombre"],
-                'tipo' => $datos_trabajador["oo"],
-                // 'email_verified_at' => $datos_trabajador["oo"],
-                'tipo_usuario' => $datos_trabajador["oo"],
-                'identificador_secretaria' => $datos_trabajador["oo"],
-                'identificador_supervisor_logistica' => $datos_trabajador["oo"],
-                'identificador_gerente' => $datos_trabajador["oo"],
-                'identificador_contador' => $datos_trabajador["oo"],
-                'identificador_chofer_moto' => $datos_trabajador["oo"],
-                'identificador_chofer_trailer' => $datos_trabajador["oo"],
-                // 'remember_token' => $datos_trabajador["oo"],
-                // 'current_team_id' => $datos_trabajador["oo"],
-                // 'profile_photo_path' => $datos_trabajador["oo"]
+             //agregar usuario tipo admin
+            $user = new User();
+            $user->name =  $datos_trabajador["nombre"];
+            $user->dni =  $datos_trabajador["dni"];
+            $user->apellido_paterno =  $datos_trabajador["apellido_paterno"];
+            $user->apellido_materno =  $datos_trabajador["apellido_materno"];
+            $user->celular =  $datos_trabajador["celular"];
+            $user->usuario =  $datos_trabajador["nombre"];
+            $user->email =  $datos_trabajador["email"];
+            $user->password = Hash::make( $datos_trabajador["password"] ); 
+            $user->tipo_usuario = "admin";
 
-            ]);
+            $rol = Role::where('name', $datos_trabajador["puesto"])->get()->first();
 
+            $user->assignRole($datos_trabajador["puesto"]);
+
+            $user->save();
+
+            var_dump($empleado->idempleado);
             
             
             $detalle_rol =  DetalleRol::create([
@@ -122,14 +116,12 @@ class PagoTrabajadoresController extends Controller
                 'fondos_reservas' =>  0,
                 'vacaciones' =>  0,
                 'sueldo_total' =>  $puesto->sueldo_fijo,
-                'empleado_idempleado' =>  $datos_trabajador["sede_idsede"],
+                'empleado_idempleado' =>  $empleado->idempleado,
                 'rol_pagos_idrol_pagos' =>  6 //junio
             ]);
 
             //USUARIO POR CREAR PARA LA TABLA USERS 
             //USUARIO DEBE ACCEDER A DETERMINADOS NUMERO DE MODULOS
-        
-
              
             DB::commit();
             return $this->index();

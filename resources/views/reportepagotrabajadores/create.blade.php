@@ -44,7 +44,7 @@
                             <select name="puesto" class="form-control" id="puesto">
                                 @foreach ($roles as $item)
                                 
-                                    <option value="{{$item->id}}">{{$item->id}} {{$item->name}}</option>
+                                    <option value="{{$item->name}}">{{$item->name}}</option>
                                 
                                 @endforeach
                             </select>
@@ -135,7 +135,7 @@
                     <div class="form-group row">
                         <label for="email" class="col-sm-4 col-form-label">Email</label>
                         <div class="col-sm-8">
-                            <input type="text" name="email" class="form-control" value="eli@gmail.com" id="email">
+                            <input type="text" name="email" class="form-control" value="eli@eli.com" id="email">
                         </div>
                     </div>
                     

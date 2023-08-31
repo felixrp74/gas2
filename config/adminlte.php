@@ -326,7 +326,7 @@ return [
             'icon' => 'fab fa-fw fa fa-bomb',
             'can' => 'admin.venta.index',
         ],     
-        ['header' => 'TRABADORES', 'can' => ''],
+        ['header' => 'TRABAJDORES', 'can' => ''],
         [
             'text' => 'Reporte Trabajadores',
             'route'  => 'reporte_pago_trabajadores.index',
@@ -342,6 +342,15 @@ return [
             'can' => 'admin.venta.create',
             // <i class=""></i>
         ],    
+        ['header' => 'MOTORIZADO', 'can' => ''],
+        [
+            'text' => 'Comprobante por sede',
+            'route'  => 'reporte_comprobante.index',
+            'icon' => 'fab fa-fw fa fa-file-invoice',
+            'can' => 'admin.venta.create',
+            // <i class=""></i>
+        ],    
+
 
         // ['header' => 'PADRES', 'can' => 'admin.docente.edit'],
         // [
