@@ -8,7 +8,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\VentaController; 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LogisticaController;
+use App\Http\Controllers\TrabajadorController;
 
+Route::resource('empleado', TrabajadorController::class); // INTERFAZ
 Route::resource('venta', VentaController::class); // INTERFAZ
 Route::resource('balon_gas', LogisticaController::class);
 Route::resource('reporte_comprobante', ComprobanteController::class);
