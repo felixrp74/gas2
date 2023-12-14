@@ -3,8 +3,10 @@
         <x-slot name="logo">
             <!-- <x-jet-authentication-card-logo /> -->
 
+            <h4 class="text-4xl text-center">Intranet</h4>
+
             <img class="block lg:hidden h-64 w-auto" src="{{asset('logo.png')}}" alt="" srcset="">
-            <img class="block lg:hidden h-64 w-auto" src="{{asset('logo.png')}}" alt="Workflow">
+            {{-- <img class="block lg:hidden h-64 w-auto" src="{{asset('logo.png')}}" alt="Workflow"> --}}
             <img class="hidden lg:block h-64 w-auto" src="{{asset('logo.png')}}" alt="Workflow">
 
         </x-slot>
